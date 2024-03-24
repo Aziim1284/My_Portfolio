@@ -14,7 +14,7 @@ import expressJS from "../assets/langues/express.png"
 import mongoDB from "../assets/langues/mongo.png"
 import MainPageImage from "../assets/langues/mainPage.png"
 import ExpenseManger from "../assets/expensemanager.png"
-
+import Ts from "../assets/langues/ts.png"
 // Array of work objects
 export const works = [
   {
@@ -48,7 +48,13 @@ export const experiences = [
     company: "Fynii",
     position: "Full-Stack Developer",
     description:
-    "As a Full-Stack Developer at Fynii, I undertook a comprehensive role, engaging in both frontend and backend development. My responsibilities encompassed designing and implementing user-friendly interfaces, as well as architecting robust server-side solutions. Collaborating with cross-functional teams, I contributed to the development lifecycle, ensuring seamless integration of features. My experience at Fynii empowered me to navigate diverse technologies, from frontend frameworks to backend databases. This role honed my ability to deliver end-to-end solutions, emphasizing innovation and efficiency. Working at Fynii has been a valuable journey, enhancing my skill set and fostering a holistic understanding of full-stack development."  }
+    "As a Full-Stack Developer at Fynii, I undertook a comprehensive role, engaging in both frontend and backend development. My responsibilities encompassed designing and implementing user-friendly interfaces, as well as architecting robust server-side solutions. Collaborating with cross-functional teams, I contributed to the development lifecycle, ensuring seamless integration of features. My experience at Fynii empowered me to navigate diverse technologies, from frontend frameworks to backend databases. This role honed my ability to deliver end-to-end solutions, emphasizing innovation and efficiency. Working at Fynii has been a valuable journey, enhancing my skill set and fostering a holistic understanding of full-stack development."  },
+    {
+      date: "Feb 2024 - APresent",
+      company: "Thinkbiz Technology Pvt. Ltd.",
+      position: "ReactJS Developer",
+      description:"I am here working as a Frontend Developer "
+    }
 ];
 // Array of langue objects
 export const langues = [
@@ -75,6 +81,12 @@ export const langues = [
     src: reactLangue,
     title: "React",
     style: "shadow-sky-500",
+  },
+  {
+    id: 144,
+    src: Ts,
+    title: "TypeScript",
+    style: "shadow-violet-500",
   },
   {
     id: 5,

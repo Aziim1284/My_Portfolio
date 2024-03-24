@@ -1,30 +1,48 @@
-import React, { useEffect ,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoSendSharp } from 'react-icons/io5';
+import emailjs from 'emailjs-com';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { useAlert } from 'react-alert'
+import { Envs } from '../ENVS/Envs';
+import { FORM_SUBMISSION_MESSAGE ,CONTACT ,SEND_BUTTON ,ALERT_MESSAGE_ON_SUBMISSION, API, MESSAGE} from '../appConstant';
+import { useMessage } from '../Context/MessageContext';
+console.log(process.env.REACT_APP_SERVICE_KEY)
 
 const Contact = () => {
-  const [isMessageSent ,setIsMessagesent] = useState(false)
-  const [message ,setMessage] =useState({
-    name:"",
-    email:"",
-    yourMessage:""
-  })
-  const changeHandler = (e)=>{
-    setMessage({...message , [e.target.name]:[e.target.value]})
-  }
-    useEffect(() => {
-        AOS.init();
-      }, []);
+  const alert = useAlert();
+  const { submitForm, submissionStatus } = useMessage();
+  const [message, setMessage] = useState({
+    name: "",
+    email: "",
+    yourMessage: ""
+  });
 
-      const clickHandler = ()=>{
-        setIsMessagesent(true)
-        setMessage({
-          name: '',
-          email: '',
-          yourMessage: ''
-        });
-      }
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
+  useEffect(() => {
+    if (submissionStatus === 'success') {
+      alert.show("Message sent successfully");
+      setMessage({
+        name: '',
+        email: '',
+        yourMessage: ''
+      });
+    } else if (submissionStatus === 'error') {
+      alert.error("Failed to send message");
+    }
+  }, [submissionStatus]);
+
+  const changeHandler = (e) => {
+    setMessage({ ...message, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    submitForm(message, `${API}/${MESSAGE}`);
+  };
 
   return (
     <div
@@ -33,18 +51,12 @@ const Contact = () => {
     >
       <div className="flex flex-col justify-center items-center w-full h-full text-white">
         {/* Heading */}
-        <p className="text-4xl font-bold inline border-b-4 border-[#00FFCA]">
-          Contact
-        </p>
+        <p className="text-4xl font-bold inline border-b-4 border-[#00FFCA]">{CONTACT}</p>
         {/* Description */}
-        <p className="py-6">
-          Submit the form below or send me an email -{" "}
-          <span className="font-bold">azeembhatti091284@gmail.com</span>
-        </p>
-
+        <p className="py-6">{FORM_SUBMISSION_MESSAGE}</p>
         {/* Form */}
         <div className="">
-          <form action="">
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
               placeholder="Name"
@@ -72,22 +84,10 @@ const Contact = () => {
               placeholder="Message"
               rows="10"
             ></textarea>
+            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              <span className='flex flex-inline items-center '>{SEND_BUTTON} <IoSendSharp className='pl-3 h-8 w-8' /></span>
+            </button>
           </form>
-        </div>
-
-        {/* Send Message Button */}
-        <div className="mt-4 mx">
-          <button
-            onClick={clickHandler}
-
-            className="text-white group border-2 px-6 py-3 my-2 flex items-center hover:bg-[#00FFCA] hover:border-[#00FFCA] rounded-sm hover:text-[#3A1078] font-semibold"
-          >
-            Send Message
-            <span className="group-hover:translate-x-1 duration-300">
-              <IoSendSharp className="ml-4" />
-            </span>
-          </button>
-          {isMessageSent && <h1 className='text-lg text-green-600 font-bold'>Your Message has been sent Successfully!</h1>}
         </div>
       </div>
     </div>

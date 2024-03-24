@@ -4,6 +4,7 @@ import { BsDownload } from "react-icons/bs";
 import { saveAs } from "file-saver";
 import file from "../assets/AzeemBhatti-CV.pdf";
 import AOS from "aos";
+import { ABOUT, ABOUT_MYSELF, DOWNLOAD_BUTTON ,CLINT} from "../appConstant";
 import "aos/dist/aos.css";
 
 const About = () => {
@@ -26,9 +27,7 @@ const About = () => {
         <div className="max-w-[1000px] w-full grid grid-cols-2 gap-8">
           {/* About heading */}
           <div className="sm:text-right pb-8 pl-4">
-            <p className="text-4xl font-bold inline border-b-4 border-[#00FFCA]">
-              About
-            </p>
+            <p className="text-4xl font-bold inline border-b-4 border-[#00FFCA]">{ABOUT} </p>
           </div>
           <div></div>
         </div>
@@ -51,25 +50,17 @@ const About = () => {
           <div className="flex flex-col justify-center">
             {/* Introduction */}
             <p className="text-xl font-bold pb-2 text-[#00FFCA]">
-              Hello Clint,
+              {CLINT},
             </p>
             {/* Description */}
-            <p className="text-sm leading-7">
-               I'm delighted to make your acquaintance. As a Junior
-              ReactJS developer, my passion lies in crafting delightful user
-              experiences. I am dedicated to seamlessly merging functionality
-              with aesthetics, ensuring that every pixel serves a meaningful
-              purpose. My journey involves a commitment to continuous learning
-              and a proactive pursuit of new challenges, all with the goal of
-              delivering innovative and impactful solutions.
-            </p>
+            <p className="text-sm leading-7">{ABOUT_MYSELF}</p>
             {/* Download resume button */}
             <div className="mt-4">
               <button
                 onClick={handleDownload}
                 className="text-white group border-2 px-6 py-3 my-2 flex items-center hover:bg-[#00FFCA] hover:border-[#00FFCA] rounded-sm hover:text-[#3A1078] font-semibold"
               >
-                Download resume{" "}
+                {DOWNLOAD_BUTTON}
                 <span className="group-hover:translate-y-1 duration-300">
                   <BsDownload className="ml-4" />
                 </span>
