@@ -5,13 +5,11 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useAlert } from 'react-alert'
 import { Envs } from '../ENVS/Envs';
-import { FORM_SUBMISSION_MESSAGE ,CONTACT ,SEND_BUTTON ,ALERT_MESSAGE_ON_SUBMISSION, API, MESSAGE} from '../appConstant';
-import { useMessage } from '../Context/MessageContext';
+import { FORM_SUBMISSION_MESSAGE ,CONTACT ,SEND_BUTTON ,ALERT_MESSAGE_ON_SUBMISSION} from '../appConstant';
 console.log(process.env.REACT_APP_SERVICE_KEY)
 
 const Contact = () => {
-  const alert = useAlert();
-  const { submitForm, submissionStatus } = useMessage();
+  const alert = useAlert()
   const [message, setMessage] = useState({
     name: "",
     email: "",
@@ -22,26 +20,24 @@ const Contact = () => {
     AOS.init();
   }, []);
 
-  useEffect(() => {
-    if (submissionStatus === 'success') {
-      alert.show("Message sent successfully");
-      setMessage({
-        name: '',
-        email: '',
-        yourMessage: ''
-      });
-    } else if (submissionStatus === 'error') {
-      alert.error("Failed to send message");
-    }
-  }, [submissionStatus]);
-
   const changeHandler = (e) => {
     setMessage({ ...message, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const sendEmail = (e) => {
     e.preventDefault();
-    submitForm(message, `${API}/${MESSAGE}`);
+
+    emailjs.sendForm(Envs.serviceKey, Envs.templateKey, e.target, Envs.publicKey)
+      .then((result) => {
+        alert.show("Message sent successFully")
+        setMessage({
+          name: '',
+          email: '',
+          yourMessage: ''
+        });
+      }, (error) => {
+        console.log(error.text);
+      });
   };
 
   return (
@@ -56,7 +52,7 @@ const Contact = () => {
         <p className="py-6">{FORM_SUBMISSION_MESSAGE}</p>
         {/* Form */}
         <div className="">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={sendEmail}>
             <input
               type="text"
               placeholder="Name"
@@ -85,7 +81,7 @@ const Contact = () => {
               rows="10"
             ></textarea>
             <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              <span className='flex flex-inline items-center '>{SEND_BUTTON} <IoSendSharp className='pl-3 h-8 w-8' /></span>
+             <span className='flex flex-inline items-center '>{SEND_BUTTON} <IoSendSharp className='pl-3 h-8 w-8'/></span> 
             </button>
           </form>
         </div>
